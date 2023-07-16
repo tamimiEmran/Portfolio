@@ -30,6 +30,18 @@
         a:hover {
             text-decoration: underline;
         }
+
+        .project-category {
+            cursor: pointer;
+        }
+
+        .project-list {
+            display: none;
+        }
+
+        .project-list.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -37,15 +49,15 @@
         <h1>Your Name</h1>
         <h2>Projects</h2>
 
-        <h3>Machine Learning</h3>
-        <ul>
+        <h3 class="project-category">Machine Learning</h3>
+        <ul class="project-list">
             <li><a href="https://github.com/yourusername/project1" target="_blank">Project 1</a></li>
             <li><a href="https://github.com/yourusername/project2" target="_blank">Project 2</a></li>
             <!-- Add more projects here -->
         </ul>
 
-        <h3>Networking</h3>
-        <ul>
+        <h3 class="project-category">Networking</h3>
+        <ul class="project-list">
             <li><a href="https://github.com/yourusername/project3" target="_blank">Project 3</a></li>
             <li><a href="https://github.com/yourusername/project4" target="_blank">Project 4</a></li>
             <!-- Add more projects here -->
@@ -53,5 +65,23 @@
 
         <!-- Add more categories here -->
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let categories = document.querySelectorAll('.project-category');
+
+            categories.forEach((category) => {
+                category.addEventListener('click', (event) => {
+                    let projectList = category.nextElementSibling;
+
+                    if (projectList.style.display === 'none' || projectList.style.display === '') {
+                        projectList.style.display = 'block';
+                    } else {
+                        projectList.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
