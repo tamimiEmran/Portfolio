@@ -36,13 +36,9 @@
         }
 
         .project-list {
-            max-height: 0;
             overflow: hidden;
-            transition: max-height 1s ease-out;
-        }
-
-        .project-list.show {
-            max-height: 500px; /* Adjust this value as needed */
+            height: 0;
+            transition: height 0.3s ease-out;
         }
     </style>
 </head>
@@ -52,14 +48,14 @@
         <h2>Projects</h2>
 
         <h3 class="project-category">Machine Learning</h3>
-        <ul class="project-list">
+        <ul class="project-list" data-max-height="0">
             <li><a href="https://github.com/yourusername/project1" target="_blank">Project 1</a></li>
             <li><a href="https://github.com/yourusername/project2" target="_blank">Project 2</a></li>
             <!-- Add more projects here -->
         </ul>
 
         <h3 class="project-category">Networking</h3>
-        <ul class="project-list">
+        <ul class="project-list" data-max-height="0">
             <li><a href="https://github.com/yourusername/project3" target="_blank">Project 3</a></li>
             <li><a href="https://github.com/yourusername/project4" target="_blank">Project 4</a></li>
             <!-- Add more projects here -->
@@ -69,17 +65,30 @@
     </div>
 
     <script>
+        function getNaturalHeight(element) {
+            const currentHeight = element.style.height;
+            element.style.height = 'auto';
+            const naturalHeight = element.offsetHeight;
+            element.style.height = currentHeight;
+            element.getBoundingClientRect(); // force repaint
+            return naturalHeight;
+        }
+
         document.addEventListener('DOMContentLoaded', (event) => {
-            let categories = document.querySelectorAll('.project-category');
+            const categories = document.querySelectorAll('.project-category');
 
             categories.forEach((category) => {
                 category.addEventListener('click', (event) => {
-                    let projectList = category.nextElementSibling;
+                    const projectList = category.nextElementSibling;
+                    const maxHeight = Number(projectList.getAttribute('data-max-height'));
+                    const naturalHeight = getNaturalHeight(projectList);
 
-                    if (projectList.classList.contains('show')) {
-                        projectList.classList.remove('show');
+                    if (maxHeight === 0) {
+                        projectList.setAttribute('data-max-height', naturalHeight);
+                        projectList.style.height = `${naturalHeight}px`;
                     } else {
-                        projectList.classList.add('show');
+                        projectList.setAttribute('data-max-height', 0);
+                        projectList.style.height = '0';
                     }
                 });
             });
