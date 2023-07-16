@@ -33,12 +33,18 @@
 
         .project-category {
             cursor: pointer;
+            color: #3366cc;
+            text-decoration: underline;
+        }
+
+        .project-category::after {
+            content: " ▼";
         }
 
         .project-list {
             overflow: hidden;
             height: 0;
-            transition: height 0.6s ease-out;
+            transition: height 0.3s ease-out;
         }
     </style>
 </head>
