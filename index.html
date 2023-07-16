@@ -36,7 +36,13 @@
         }
 
         .project-list {
-            display: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
+        .project-list.show {
+            max-height: 500px; /* Adjust this value as needed */
         }
     </style>
 </head>
@@ -70,10 +76,10 @@
                 category.addEventListener('click', (event) => {
                     let projectList = category.nextElementSibling;
 
-                    if (projectList.style.display === 'none' || projectList.style.display === '') {
-                        projectList.style.display = 'block';
+                    if (projectList.classList.contains('show')) {
+                        projectList.classList.remove('show');
                     } else {
-                        projectList.style.display = 'none';
+                        projectList.classList.add('show');
                     }
                 });
             });
